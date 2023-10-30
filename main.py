@@ -14,11 +14,14 @@ def find_new_posting():
     new_postings = []
     
     for index, entry in enumerate(feed['entries']):
+    
         published_time = datetime.strptime(entry['published'], "%Y-%m-%dT%H:%M:%S+00:00")
+       
+
         if published_time > one_hour_ago and published_time <= current_time :
             title = entry['title']
             link = entry['link']
-            published_time_str = published_time.strftime("%Y.%m.%d %H:%M")
+            published_time_str = (published_time + timedelta(hours = 9)).strftime("%Y.%m.%d %H:%M")
             new_postings.append({ 'title':title,'link':link,'published_time':published_time_str })
             print(f'#{ index + 1 } : { title } | { published_time_str } | { link } \n ')
 
