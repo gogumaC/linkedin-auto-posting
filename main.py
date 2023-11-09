@@ -4,6 +4,7 @@ import feedparser
 from datetime import datetime, timedelta
 import configparser as parser
 import ssl
+import sys
 
 def find_new_posting():
 
@@ -20,7 +21,7 @@ def find_new_posting():
 
     if feed.bozo == 1:
         print(f"Error parsing feed: {feed.bozo_exception}\n")
-        return new_postings
+        sys.exit(1)
     
     for index, entry in enumerate(feed['entries']):
     
