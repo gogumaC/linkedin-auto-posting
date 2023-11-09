@@ -52,15 +52,22 @@ def request_posting(title,link,content):
         print(f"Request fail : {response.status_code} {response.text}")
 
 
-
 if __name__=="__main__":
 
-    properties=parser.ConfigParser()
-    properties.read('./config.ini')
-    url_config=properties['URL']
+    local_feed_url=""
+    local_request_url=""
 
-    FEED_URL = os.environ['RSS_FEED_URL'] #if os.environ.get('RSS_FEED_URL') != None else url_config['feed_url']
-    REQUEST_URL = os.environ['REQUEST_URL'] #if os.environ.get('POSTING_CONTENT') != None else url_config['request_url']
+    if os.path.isfile('./config.ini'):
+        properties=parser.ConfigParser()
+        properties.read('./config.ini')
+        url_config=properties['URL']
+        local_feed_url=url_config['feed_url']
+        local_request_url=url_config['request_url']
+    
+
+
+    FEED_URL = os.environ['RSS_FEED_URL'] if os.environ.get('RSS_FEED_URL') != None else local_feed_url
+    REQUEST_URL = os.environ['REQUEST_URL'] if os.environ.get('POSTING_CONTENT') != None else local_request_url
     DEFAULT_CONTENT = os.environ['POSTING_CONTENT'] if os.environ.get('POSTING_CONTENT') != None else "New Posting"
 
     new_postings = find_new_posting()
