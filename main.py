@@ -2,21 +2,30 @@ import requests
 import os
 import feedparser
 from datetime import datetime, timedelta
+import configparser as parser
+import ssl
 
 def find_new_posting():
 
-    print("\nFinding new posting...\n")
+    if hasattr (ssl,'_create_unverified_context') :
+        ssl._create_default_https_context=ssl._create_unverified_context
+
+    print(f"\nFinding new posting...from {FEED_URL}\n")
 
     feed = feedparser.parse(FEED_URL)
     current_time = datetime.now()
     one_hour_ago = current_time - timedelta(hours = 1)
 
     new_postings = []
+
+    if feed.bozo == 1:
+        print(f"Error parsing feed: {feed.bozo_exception}\n")
+        return new_postings
     
     for index, entry in enumerate(feed['entries']):
     
+
         published_time = datetime.strptime(entry['published'], "%Y-%m-%dT%H:%M:%S+00:00")
-       
 
         if published_time > one_hour_ago and published_time <= current_time :
             title = entry['title']
@@ -45,8 +54,13 @@ def request_posting(title,link,content):
 
 
 if __name__=="__main__":
-    FEED_URL = os.environ['RSS_FEED_URL']
-    REQUEST_URL = os.environ['REQUEST_URL']
+
+    properties=parser.ConfigParser()
+    properties.read('./config.ini')
+    url_config=properties['URL']
+
+    FEED_URL = os.environ['RSS_FEED_URL'] #if os.environ.get('RSS_FEED_URL') != None else url_config['feed_url']
+    REQUEST_URL = os.environ['REQUEST_URL'] #if os.environ.get('POSTING_CONTENT') != None else url_config['request_url']
     DEFAULT_CONTENT = os.environ['POSTING_CONTENT'] if os.environ.get('POSTING_CONTENT') != None else "New Posting"
 
     new_postings = find_new_posting()
