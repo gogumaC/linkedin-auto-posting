@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 import configparser as parser
 import ssl
 import sys
+from fastapi import FastAPI
+
 
 def find_new_posting():
 
@@ -79,3 +81,4 @@ if __name__=="__main__":
         published_time = posting['published_time']
         content = DEFAULT_CONTENT + f"\n[{title}] \npublished : {published_time}"
         request_posting(title, link, content)
+    
