@@ -4,30 +4,10 @@ from requests.auth import HTTPBasicAuth
 import send_email
 import os
 
-if __name__ == "__main__":
-    
-    CLIENT_ID=os.getenv("client_id")
-    CLIENT_SECRETE=os.getenv("client_secrete")
-    REDIRECT_URL=os.getenv("redirect_url")
-    CLIENT_EMAIL=os.getenv("client_email")
-
-def get_access_token(auth_code):
-  token_url="https://www.linkedin.com/oauth/v2/accessToken"
-  data={
-      'grant_type':'authorization_code',
-      'code' : auth_code,
-      'redirect_uri':REDIRECT_URL,
-      'client_id' : CLIENT_ID,
-      'client_secret' : CLIENT_SECRETE
-  }
-
-  response=requests.post(token_url,data=data,auth=HTTPBasicAuth(CLIENT_ID,CLIENT_SECRETE))
-
-  if response.status_code==200:
-    access_token=response.json().get('access_token')
-    print(f"access toekn : {access_token}")
-  else :
-    print(f"Fail : {response.status_code}, {response.text}")
+CLIENT_ID=os.getenv("client_id")
+CLIENT_SECRETE=os.getenv("client_secrete")
+REDIRECT_URL=os.getenv("redirect_url")
+CLIENT_EMAIL=os.getenv("client_email")
 
 
 def start_authorization():
@@ -45,6 +25,29 @@ def start_authorization():
 
   print("please check your email for reauthorization.\n\n")
   send_email.send_auth_email(CLIENT_EMAIL,auth_url)
+
+
+async def get_access_token(auth_code):
+
+  print("request access toekn...\n ")
+  token_url="https://www.linkedin.com/oauth/v2/accessToken"
+  data={
+      'grant_type':'authorization_code',
+      'code' : auth_code,
+      'redirect_uri':REDIRECT_URL,
+      'client_id' : CLIENT_ID,
+      'client_secret' : CLIENT_SECRETE
+  }
+
+  response=requests.post(token_url,data=data,auth=HTTPBasicAuth(CLIENT_ID,CLIENT_SECRETE))
+
+  if response.status_code==200:
+    access_token=response.json().get('access_token')
+    msg="Sucessfully get access token!"
+  else :
+    msg=f"Fail : {response.status_code}, {response.text}"
+  
+  return {"status":response.status_code,"message":msg}
   
 
 
