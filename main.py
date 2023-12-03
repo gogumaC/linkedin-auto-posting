@@ -6,6 +6,7 @@ import configparser as parser
 import ssl
 import sys
 from fastapi import FastAPI
+from dotenv import load_dotenv
 
 
 def find_new_posting():
@@ -17,7 +18,7 @@ def find_new_posting():
 
     feed = feedparser.parse(FEED_URL)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hours = 1)
+    one_hour_ago = current_time - timedelta(days = 1)
 
     new_postings = []
 
@@ -28,12 +29,12 @@ def find_new_posting():
     for index, entry in enumerate(feed['entries']):
     
 
-        published_time = datetime.strptime(entry['published'], "%Y-%m-%dT%H:%M:%S+00:00")
+        published_time = datetime.strptime(entry['published'], "%Y-%m-%dT%H:%M:%S+09:00")
 
         if published_time > one_hour_ago and published_time <= current_time :
             title = entry['title']
             link = entry['link']
-            published_time_str = (published_time + timedelta(hours = 9)).strftime("%Y.%m.%d %H:%M")
+            published_time_str = published_time.strftime("%Y.%m.%d %H:%M")
             new_postings.append({ 'title':title,'link':link,'published_time':published_time_str })
             print(f'#{ index + 1 } : { title } | { published_time_str } | { link } \n ')
 
@@ -60,12 +61,10 @@ if __name__=="__main__":
     local_feed_url=""
     local_request_url=""
 
-    if os.path.isfile('./config.ini'):
-        properties=parser.ConfigParser()
-        properties.read('./config.ini')
-        url_config=properties['URL']
-        local_feed_url=url_config['feed_url']
-        local_request_url=url_config['request_url']
+    if os.path.isfile('.env'):
+        load_dotenv()
+        local_feed_url=os.getenv('feed_url')
+        local_request_url=os.getenv('request_url')
     
 
 
