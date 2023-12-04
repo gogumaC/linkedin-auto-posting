@@ -1,14 +1,14 @@
-import configparser as parser
 import requests
 from requests.auth import HTTPBasicAuth
 import send_email
 import os
+import dotenv
 
+dotenv.load_dotenv()
 CLIENT_ID=os.getenv("client_id")
 CLIENT_SECRETE=os.getenv("client_secrete")
 REDIRECT_URL=os.getenv("redirect_url")
 CLIENT_EMAIL=os.getenv("client_email")
-
 
 def start_authorization():
   print("authorization start...\n")
@@ -43,6 +43,7 @@ async def get_access_token(auth_code):
 
   if response.status_code==200:
     access_token=response.json().get('access_token')
+    dotenv.set_key(dotenv.find_dotenv(),"access_toekn",access_token)
     msg="Sucessfully get access token!"
   else :
     msg=f"Fail : {response.status_code}, {response.text}"
