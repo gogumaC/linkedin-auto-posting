@@ -2,11 +2,12 @@ import requests
 import os
 import feedparser
 from datetime import datetime, timedelta
-import configparser as parser
 import ssl
 import sys
 from fastapi import FastAPI
 from dotenv import load_dotenv
+import posting
+from posting import Posting
 
 
 def find_new_posting():
@@ -18,7 +19,7 @@ def find_new_posting():
 
     feed = feedparser.parse(FEED_URL)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hours = 1)
+    one_hour_ago = current_time - timedelta(hour=1)
 
     new_postings = []
 
@@ -43,19 +44,6 @@ def find_new_posting():
     return new_postings
 
 
-def request_posting(title,link,content):
-
-    print(f"\nRequest posting : {title}...")
-
-    data={ 'link':link,'content':content,'title':title}
-    response=requests.post(REQUEST_URL,data)
-    
-    if response.status_code==200:
-        print("Successfully request")
-    else:
-        print(f"Request fail : {response.status_code} {response.text}")
-
-
 if __name__=="__main__":
 
     local_feed_url=""
@@ -66,18 +54,16 @@ if __name__=="__main__":
         local_feed_url=os.getenv('feed_url')
         local_request_url=os.getenv('request_url')
     
-
-
     FEED_URL = os.environ['RSS_FEED_URL'] if os.environ.get('RSS_FEED_URL') != None else local_feed_url
     REQUEST_URL = os.environ['REQUEST_URL'] if os.environ.get('POSTING_CONTENT') != None else local_request_url
     DEFAULT_CONTENT = os.environ['POSTING_CONTENT'] if os.environ.get('POSTING_CONTENT') != None else "New Posting"
 
     new_postings = find_new_posting()
 
-    for posting in new_postings :
-        title = posting['title']
-        link = posting['link']
-        published_time = posting['published_time']
+    for post in new_postings :
+        title = post['title']
+        link = post['link']
+        published_time = post['published_time']
         content = DEFAULT_CONTENT + f"\n[{title}] \npublished : {published_time}"
-        request_posting(title, link, content)
+        posting.post_to_linkedin(Posting(url=link,title=title,content=content))
     
