@@ -3,6 +3,9 @@ from requests.auth import HTTPBasicAuth
 import send_email
 import os
 import dotenv
+import json
+from posting import Posting
+import posting
 
 dotenv.load_dotenv()
 CLIENT_ID=os.getenv("client_id")
@@ -24,7 +27,7 @@ def start_authorization():
   auth_url = f"{AUTH_URL}?{'&'.join([f'{k}={v}' for k , v in auth_params.items()])}"
 
   print("please check your email for reauthorization.\n\n")
-  send_email.send_auth_email(CLIENT_EMAIL,auth_url)
+  send_email.send_auth_email(auth_url)
 
 
 async def get_access_token(auth_code):
@@ -45,6 +48,13 @@ async def get_access_token(auth_code):
     access_token=response.json().get('access_token')
     dotenv.set_key(dotenv.find_dotenv(),"access_toekn",access_token)
     msg="Sucessfully get access token!"
+    print(msg)
+    with open('pended.json','r+') as file:
+      data=json.load(file)
+      pended_posting=Posting(**data)
+      posting.post_to_linkedin(pended_posting)
+      file.seek(0)
+      file.truncate()
   else :
     msg=f"Fail : {response.status_code}, {response.text}"
   

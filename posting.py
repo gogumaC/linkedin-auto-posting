@@ -2,6 +2,10 @@ import requests
 import os
 import dotenv
 from pydantic import BaseModel
+from bs4 import BeautifulSoup
+import send_email
+import auth
+import json
 
 class Posting(BaseModel):
   url:str
@@ -23,8 +27,29 @@ def get_user_urn():
   else:
     print(f'error : {response.status_code} {response.text}')
 
+
+def get_og_image(url):
+  response=requests.get(url)
+  html=response.text
+
+  soup=BeautifulSoup(html,'html.parser')
+
+  og_image=soup.find('meta',property='og:image')
+    
+  if og_image and og_image.get('content'):
+      return og_image['content']
+  else:
+      return os.getenv("default_og_image")
+  
+def save_pended_posting(posting:Posting):
+  with open('pended.json','w+') as file:
+    json.dump(posting.__dict__,file)
+  print(f"save pended posting {posting.title}")
+
 def post_to_linkedin(posting:Posting):
+  print(f"posting {posting.title}...")
   CLIENT_URN=get_user_urn()
+  og_image=get_og_image(posting.url)
   url ="https://api.linkedin.com/v2/ugcPosts"
   headers = {
         'LinkedIn-Version': '202210',
@@ -46,10 +71,13 @@ def post_to_linkedin(posting:Posting):
                   "status": "READY",
                   "thumbnails": [
                   {
-                    "url": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
+                    "url": og_image
                   }
-            ],
-                    "originalUrl": posting.url
+                  ],
+                  "originalUrl": posting.url,
+                  "title": {
+                      "text": posting.title
+                  },
                 }
             ]
         }
@@ -62,11 +90,12 @@ def post_to_linkedin(posting:Posting):
 
   response= requests.post(url,headers=headers,json=payload)
   if response.status_code==201:
-    print("Success linkedin posting")
+    print(f"Success posting to linkedin > {posting.title}")
+    send_email.send_posing_complete_email(posting_title=posting.title,link=posting.url)
+  elif response.status_code==401:
+    save_pended_posting(posting)
+    print(f"need reauth")
+    auth.start_authorization()
   else :
     print(f"Fail linkedin posting : {response.status_code}, {response.text}")
-
-
-if __name__ == "__main__":
-  post_to_linkedin(Posting(url="https://gogumac.github.io/", title="testdsdfds", content="testing auto post!"))
-
+    send_email.send_posing_fail_email(posting_title=posting.title,code=response.status_code,text=response.text)
