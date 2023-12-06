@@ -61,5 +61,5 @@ async def get_access_token(auth_code):
   return {"status":response.status_code,"message":msg}
   
 
-
-
+if __name__ == "__main__" :
+  start_authorization()
