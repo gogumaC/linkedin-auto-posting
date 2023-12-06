@@ -19,7 +19,7 @@ def find_new_posting():
 
     feed = feedparser.parse(FEED_URL)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hour=1)
+    one_hour_ago = current_time - timedelta(hour=6)
 
     new_postings = []
 
