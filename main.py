@@ -1,14 +1,11 @@
-import requests
 import os
 import feedparser
 from datetime import datetime, timedelta
 import ssl
 import sys
-from fastapi import FastAPI
 from dotenv import load_dotenv
+from classes import Posting
 import posting
-from posting import Posting
-
 
 def find_new_posting():
 
@@ -19,7 +16,7 @@ def find_new_posting():
 
     feed = feedparser.parse(FEED_URL)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hour=6)
+    one_hour_ago = current_time - timedelta(hours=6)
 
     new_postings = []
 

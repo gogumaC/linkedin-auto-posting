@@ -4,7 +4,7 @@ import send_email
 import os
 import dotenv
 import json
-from posting import Posting
+from classes import Posting
 import posting
 
 dotenv.load_dotenv()

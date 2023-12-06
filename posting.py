@@ -1,16 +1,14 @@
 import requests
 import os
 import dotenv
-from pydantic import BaseModel
 from bs4 import BeautifulSoup
 import send_email
 import auth
 import json
+from classes import Posting
 
-class Posting(BaseModel):
-  url:str
-  title:str
-  content:str
+
+
 
 dotenv.load_dotenv()
 ACCESS_TOKEN=os.getenv("access_toekn")
