@@ -46,6 +46,10 @@ def save_pended_posting(posting:Posting):
     json.dump(posting.__dict__,file)
   print(f"save pended posting {posting.title}")
 
+def check_already_request():
+  return os.stat('pended.json').st_size==0
+
+
 def post_to_linkedin(posting:Posting):
   print(f"posting {posting.title}...")
   CLIENT_URN=get_user_urn()
@@ -93,9 +97,10 @@ def post_to_linkedin(posting:Posting):
     print(f"Success posting to linkedin > {posting.title}")
     send_email.send_posing_complete_email(posting_title=posting.title,link=posting.url)
   elif response.status_code==401:
-    save_pended_posting(posting)
     print(f"need reauth")
-    auth.start_authorization()
+    save_pended_posting(posting)
+    if check_already_request()==False: 
+      auth.start_authorization()
   else :
     print(f"Fail linkedin posting : {response.status_code}, {response.text}")
     send_email.send_posing_fail_email(posting_title=posting.title,code=response.status_code,text=response.text)
