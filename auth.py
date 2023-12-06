@@ -49,12 +49,13 @@ async def get_access_token(auth_code):
     dotenv.set_key(dotenv.find_dotenv(),"access_toekn",access_token)
     msg="Sucessfully get access token!"
     print(msg)
-    with open('pended.json','r+') as file:
-      data=json.load(file)
-      pended_posting=Posting(**data)
-      posting.post_to_linkedin(pended_posting)
-      file.seek(0)
-      file.truncate()
+    if(posting.check_pended_posting_empty()==False):
+      with open('pended.json','r+') as file:
+        data=json.load(file)
+        pended_posting=Posting(**data)
+        posting.post_to_linkedin(pended_posting)
+        file.seek(0)
+        file.truncate()
   else :
     msg=f"Fail : {response.status_code}, {response.text}"
   
