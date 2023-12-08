@@ -1,3 +1,3 @@
 # linkedin-auto-posting
 
-![linkedin-auto-posting drawio (1)](https://github.com/gogumaC/linkedin-auto-posting/assets/59639035/e3abbf85-9d2b-4883-8a98-d9fcb1a72f80)
+![linkedin-auto-posting drawio (2)](https://github.com/gogumaC/linkedin-auto-posting/assets/59639035/9b68f3f3-cdd4-4e8d-86c0-28cb5ecdc287)
