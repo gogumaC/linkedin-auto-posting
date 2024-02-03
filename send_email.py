@@ -1,23 +1,19 @@
 import smtplib
-import configparser as parser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import re
-import os
-from dotenv import load_dotenv
+from config import config
 
-load_dotenv()
-
-account=os.getenv('account')
-pw=os.getenv('password')
+account=config.get('account')
+pw=config.get('password')
+email=config.get("client_email")
 
 smtp=smtplib.SMTP_SSL('smtp.gmail.com',465)
 smtp.login(account,pw)
 
-email=os.getenv("client_email")
+reg = r'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
 def send_auth_email(auth_url):
-    reg = r'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
     if re.match(reg,email):
 
@@ -37,7 +33,6 @@ def send_auth_email(auth_url):
         print("email format not valid")
 
 def send_posing_complete_email(posting_title,link):
-    reg = r'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
     if re.match(reg,email):
 
@@ -57,8 +52,7 @@ def send_posing_complete_email(posting_title,link):
         print("email format not valid")
 
 def send_posing_fail_email(posting_title,code,text):
-    reg = r'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-
+    
     if re.match(reg,email):
 
         msg=MIMEMultipart()

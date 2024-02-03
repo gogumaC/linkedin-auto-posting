@@ -1,21 +1,14 @@
 import requests
 import os
-import dotenv
 from bs4 import BeautifulSoup
 import send_email
 import auth
 import json
 from classes import Posting
 
-
-
-
-dotenv.load_dotenv()
-ACCESS_TOKEN=os.getenv("access_toekn")
-
-def get_user_urn():
+def get_user_urn(access_token):
   url='https://api.linkedin.com/v2/userinfo'
-  headers={'Authorization': f'Bearer {ACCESS_TOKEN}'}
+  headers={'Authorization': f'Bearer {access_token}'}
   response=requests.get(url,headers=headers)
 
   if response.status_code ==200:
@@ -48,7 +41,7 @@ def check_pended_posting_empty():
   return os.stat('pended.json').st_size==0
 
 
-def post_to_linkedin(posting:Posting):
+def post_to_linkedin(posting:Posting,access_token):
   print(f"posting {posting.title}...")
   CLIENT_URN=get_user_urn()
   og_image=get_og_image(posting.url)
@@ -56,7 +49,7 @@ def post_to_linkedin(posting:Posting):
   headers = {
         'LinkedIn-Version': '202210',
         'X-Restli-Proturlocol-Version': '2.0.0',
-        "Authorization": f"Bearer {ACCESS_TOKEN}" 
+        "Authorization": f"Bearer {access_token}" 
     }
 
   payload = {

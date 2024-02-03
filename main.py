@@ -5,9 +5,9 @@ import sys
 from dotenv import load_dotenv
 from classes import Posting
 import posting
-from config import Config
+from config import config
 
-ACCESS_TOKEN=Config.get("access_toekn")
+ACCESS_TOKEN=config.get("access_toekn")
 
 def find_new_posting(feed_url):
     if hasattr (ssl,'_create_unverified_context') :
@@ -17,7 +17,7 @@ def find_new_posting(feed_url):
 
     feed = feedparser.parse(feed_url)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hours=8)
+    one_hour_ago = current_time - timedelta(days=55)
 
     new_postings = []
 
@@ -44,8 +44,8 @@ def find_new_posting(feed_url):
 
 if __name__=="__main__":
 
-    local_feed_url=Config.get('feed_url')
-    content=Config.get('content')
+    local_feed_url=config.get('feed_url')
+    content=config.get('content')
 
     new_postings = find_new_posting(local_feed_url)
 
@@ -55,4 +55,5 @@ if __name__=="__main__":
         published_time = post['published_time']
         content = content + f"\n[{title}] \npublished : {published_time}"
        # posting.post_to_linkedin(Posting(url=link,title=title,content=content),ACCESS_TOKEN)
+        #posting.post_to_linkedin(Posting(url="www.gogumac.com",title="test",content="test posting"),ACCESS_TOKEN)
     
