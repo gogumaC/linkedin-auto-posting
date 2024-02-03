@@ -5,8 +5,11 @@ import send_email
 import auth
 import json
 from classes import Posting
+from config import config
 
-def get_user_urn(access_token):
+access_token=config.get('access_token')
+
+def get_user_urn():
   url='https://api.linkedin.com/v2/userinfo'
   headers={'Authorization': f'Bearer {access_token}'}
   response=requests.get(url,headers=headers)
@@ -41,11 +44,12 @@ def check_pended_posting_empty():
   return os.stat('pended.json').st_size==0
 
 
-def post_to_linkedin(posting:Posting,access_token):
+def post_to_linkedin(posting:Posting):
   print(f"posting {posting.title}...")
   CLIENT_URN=get_user_urn()
   og_image=get_og_image(posting.url)
   url ="https://api.linkedin.com/v2/ugcPosts"
+
   headers = {
         'LinkedIn-Version': '202210',
         'X-Restli-Proturlocol-Version': '2.0.0',

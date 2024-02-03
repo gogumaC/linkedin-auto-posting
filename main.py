@@ -2,12 +2,10 @@ import feedparser
 from datetime import datetime, timedelta
 import ssl
 import sys
-from dotenv import load_dotenv
 from classes import Posting
 import posting
 from config import config
 
-ACCESS_TOKEN=config.get("access_toekn")
 
 def find_new_posting(feed_url):
     if hasattr (ssl,'_create_unverified_context') :
@@ -26,7 +24,6 @@ def find_new_posting(feed_url):
         sys.exit(1)
     
     for index, entry in enumerate(feed['entries']):
-    
 
         published_time = datetime.strptime(entry['published'], "%Y-%m-%dT%H:%M:%S+09:00")
 
@@ -54,6 +51,7 @@ if __name__=="__main__":
         link = post['link']
         published_time = post['published_time']
         content = content + f"\n[{title}] \npublished : {published_time}"
-       # posting.post_to_linkedin(Posting(url=link,title=title,content=content),ACCESS_TOKEN)
-        #posting.post_to_linkedin(Posting(url="www.gogumac.com",title="test",content="test posting"),ACCESS_TOKEN)
+        update_posting=Posting(url=link,title=title,content=content)
+        posting.post_to_linkedin(update_posting)
+        
     

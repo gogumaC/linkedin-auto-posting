@@ -6,12 +6,13 @@ import dotenv
 import json
 from classes import Posting
 import posting
+from config import config
 
 dotenv.load_dotenv()
-CLIENT_ID=os.getenv("client_id")
-CLIENT_SECRETE=os.getenv("client_secrete")
-REDIRECT_URL=os.getenv("redirect_url")
-CLIENT_EMAIL=os.getenv("client_email")
+CLIENT_ID=config.get("client_id")
+CLIENT_SECRETE=config.get("client_secrete")
+REDIRECT_URL=config.get("redirect_url")
+CLIENT_EMAIL=config.get("client_email")
 
 def start_authorization():
   print("authorization start...\n")
@@ -32,7 +33,7 @@ def start_authorization():
 
 async def get_access_token(auth_code):
 
-  print("request access toekn...\n ")
+  print("request access token...\n ")
   token_url="https://www.linkedin.com/oauth/v2/accessToken"
   data={
       'grant_type':'authorization_code',
@@ -46,7 +47,7 @@ async def get_access_token(auth_code):
 
   if response.status_code==200:
     access_token=response.json().get('access_token')
-    dotenv.set_key(dotenv.find_dotenv(),"access_toekn",access_token)
+    dotenv.set_key(dotenv.find_dotenv(),"access_token",access_token)
     msg="Sucessfully get access token!"
     print(msg)
     if(posting.check_pended_posting_empty()==False):
