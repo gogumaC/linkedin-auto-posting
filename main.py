@@ -1,4 +1,3 @@
-import os
 import feedparser
 from datetime import datetime, timedelta
 import ssl
@@ -6,17 +5,19 @@ import sys
 from dotenv import load_dotenv
 from classes import Posting
 import posting
+from config import Config
 
-def find_new_posting():
+ACCESS_TOKEN=Config.get("access_toekn")
 
+def find_new_posting(feed_url):
     if hasattr (ssl,'_create_unverified_context') :
         ssl._create_default_https_context=ssl._create_unverified_context
 
-    print(f"\nFinding new posting...from {FEED_URL}\n")
+    print(f"\nFinding new posting...from {feed_url}\n")
 
-    feed = feedparser.parse(FEED_URL)
+    feed = feedparser.parse(feed_url)
     current_time = datetime.now()
-    one_hour_ago = current_time - timedelta(hours=1)
+    one_hour_ago = current_time - timedelta(hours=8)
 
     new_postings = []
 
@@ -43,24 +44,15 @@ def find_new_posting():
 
 if __name__=="__main__":
 
-    local_feed_url=""
-    local_request_url=""
+    local_feed_url=Config.get('feed_url')
+    content=Config.get('content')
 
-    if os.path.isfile('.env'):
-        load_dotenv()
-        local_feed_url=os.getenv('feed_url')
-        local_request_url=os.getenv('request_url')
-    
-    FEED_URL = os.environ['RSS_FEED_URL'] if os.environ.get('RSS_FEED_URL') != None else local_feed_url
-    REQUEST_URL = os.environ['REQUEST_URL'] if os.environ.get('POSTING_CONTENT') != None else local_request_url
-    DEFAULT_CONTENT = os.environ['POSTING_CONTENT'] if os.environ.get('POSTING_CONTENT') != None else "New Posting"
-
-    new_postings = find_new_posting()
+    new_postings = find_new_posting(local_feed_url)
 
     for post in new_postings :
         title = post['title']
         link = post['link']
         published_time = post['published_time']
-        content = DEFAULT_CONTENT + f"\n[{title}] \npublished : {published_time}"
-        posting.post_to_linkedin(Posting(url=link,title=title,content=content))
+        content = content + f"\n[{title}] \npublished : {published_time}"
+       # posting.post_to_linkedin(Posting(url=link,title=title,content=content),ACCESS_TOKEN)
     
