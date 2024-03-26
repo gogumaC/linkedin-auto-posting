@@ -8,6 +8,9 @@ from config import config
 
 
 def find_new_posting(feed_url):
+
+    print(f"Linked Auto Posting Started!-------- \n start time : {datetime.now()}")
+    
     if hasattr (ssl,'_create_unverified_context') :
         ssl._create_default_https_context=ssl._create_unverified_context
 
