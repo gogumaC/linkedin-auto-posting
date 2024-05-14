@@ -1,11 +1,11 @@
 import requests
 from requests.auth import HTTPBasicAuth
-import send_email
+import send_email as send_email
 import os
 import dotenv
 import json
 from classes import Posting
-import posting
+import posting as posting
 from config import config
 
 dotenv.load_dotenv()

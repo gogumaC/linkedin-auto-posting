@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import ssl
 import sys
 from classes import Posting
-import posting
+import posting as posting
 from config import config
 
 

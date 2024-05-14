@@ -1,7 +1,7 @@
 import requests
 import os
 from bs4 import BeautifulSoup
-import send_email
+import send_email as send_email
 import auth
 import json
 from classes import Posting
