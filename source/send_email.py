@@ -6,7 +6,7 @@ from config import config
 
 account=config.get('account')
 pw=config.get('password')
-email=config.get("client_email")
+email=config.get('client_email')
 
 smtp=smtplib.SMTP_SSL('smtp.gmail.com',465)
 smtp.login(account,pw)
@@ -49,7 +49,7 @@ def send_posing_complete_email(posting_title,link):
         smtp.quit()
         print(f"posting complete email sended!\n\n")
     else :
-        print("email format not valid")
+        print("email format not valid",email)
 
 def send_posing_fail_email(posting_title,code,text):
     

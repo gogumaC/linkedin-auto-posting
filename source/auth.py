@@ -9,10 +9,10 @@ import posting as posting
 from config import config
 
 dotenv.load_dotenv()
-CLIENT_ID=config.get("client_id")
-CLIENT_SECRETE=config.get("client_secrete")
-REDIRECT_URL=config.get("redirect_url")
-CLIENT_EMAIL=config.get("client_email")
+CLIENT_ID=config.get('client_id')
+CLIENT_SECRETE=config.get('client_secrete')
+REDIRECT_URL=config.get('redirect_url')
+CLIENT_EMAIL=config.get('client_email')
 
 def start_authorization():
   print("authorization start...\n")

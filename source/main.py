@@ -9,7 +9,7 @@ from config import config
 
 def find_new_posting(feed_url):
 
-    print(f"Linked Auto Posting Started!-------- \n start time : {datetime.now()}")
+    print(f"-------------------------\n Linked Auto Posting Started! start time : {datetime.now()}")
     
     if hasattr (ssl,'_create_unverified_context') :
         ssl._create_default_https_context=ssl._create_unverified_context
@@ -47,14 +47,19 @@ if __name__=="__main__":
     local_feed_url=config.get('feed_url')
     content=config.get('content')
 
-    new_postings = find_new_posting(local_feed_url)
+    #new_postings = find_new_posting(local_feed_url)
 
-    for post in new_postings :
-        title = post['title']
-        link = post['link']
-        published_time = post['published_time']
-        content = content + f"\n[{title}] \npublished : {published_time}"
-        update_posting=Posting(url=link,title=title,content=content)
-        posting.post_to_linkedin(update_posting)
+    # for post in new_postings :
+    #     title = post['title']
+    #     link = post['link']
+    #     published_time = post['published_time']
+    #     content = content + f"\n[{title}] \npublished : {published_time}"
+    #     update_posting=Posting(url=link,title=title,content=content)
+    #     posting.post_to_linkedin(update_posting)
+
+    update_posting=Posting(url="https://gogumac.github.io/",title="test",content=content)
+    print(update_posting)
+    posting.post_to_linkedin(update_posting)
+    
         
     
