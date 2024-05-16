@@ -92,7 +92,7 @@ def post_to_linkedin(posting:Posting):
     print(f"Success posting to linkedin > {posting.title}")
     send_email.send_posing_complete_email(posting_title=posting.title,link=posting.url)
   elif response.status_code==401:
-    print(f"need reauth")
+    print(f"\nneed reauth")
     save_pended_posting(posting)
     if check_pended_posting_empty()==False: 
       auth.start_authorization()
