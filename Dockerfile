@@ -15,7 +15,7 @@ COPY ./source .
 
 #ENTRYPOINT ["python3", "main.py"]
 
-ENTRYPOINT ["python3","server.py" ]
+ENTRYPOINT ["./feed_parse.sh" ]
 
 # COPY cronjob /etc/cron.d/cronjob
 
