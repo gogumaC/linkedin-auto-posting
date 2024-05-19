@@ -47,7 +47,8 @@ async def get_access_token(auth_code):
 
   if response.status_code==200:
     access_token=response.json().get('access_token')
-    dotenv.set_key(dotenv.find_dotenv(),"access_token",access_token)
+    
+    dotenv.set_key('.env','access_token',access_token)
     msg="Sucessfully get access token!"
     print(msg)
     if(posting.check_pended_posting_empty()==False):
