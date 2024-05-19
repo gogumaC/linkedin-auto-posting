@@ -47,18 +47,15 @@ if __name__=="__main__":
     local_feed_url=config.get('feed_url')
     content=config.get('content')
 
-    #new_postings = find_new_posting(local_feed_url)
+    new_postings = find_new_posting(local_feed_url)
 
-    # for post in new_postings :
-    #     title = post['title']
-    #     link = post['link']
-    #     published_time = post['published_time']
-    #     content = content + f"\n[{title}] \npublished : {published_time}"
-    #     update_posting=Posting(url=link,title=title,content=content)
-    #     posting.post_to_linkedin(update_posting)
-
-    update_posting=Posting(url="https://gogumac.github.io/",title="test",content=content)
-    print(update_posting)
+    for post in new_postings :
+        title = post['title']
+        link = post['link']
+        published_time = post['published_time']
+        content = content + f"\n[{title}] \npublished : {published_time}"
+        update_posting=Posting(url=link,title=title,content=content)
+        posting.post_to_linkedin(update_posting)
     posting.post_to_linkedin(update_posting)
     
         

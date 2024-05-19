@@ -4,4 +4,4 @@
 #python3 /home/yubin/linkedin-auto-posting/main.py#
 
 python3 main.py 
-python3 server.py 
+#python3 server.py 
