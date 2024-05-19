@@ -1,1 +1,2 @@
-0 * * * * date >> /app/linkedin-auto-poiting/main.py >> /var/log/linkedin-auto-post.log 2>&1
+# 0 * * * * date >> /app/linkedin-auto-poiting/main.py >> /var/log/linkedin-auto-post.log 2>&1
+* * * * * echo 'Hello World' >> /proc/1/fd/1 2>&1

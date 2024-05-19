@@ -12,15 +12,18 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./source .
+COPY cronjob /etc/cron.d/cronjob
 
-#ENTRYPOINT ["python3", "main.py"]
+RUN chmod 0644 /etc/cron.d/cronjob
+RUN crontab /etc/cron.d/cronjob
 
-ENTRYPOINT ["./feed_parse.sh" ]
+CMD ["cron","-f"]
 
-# COPY cronjob /etc/cron.d/cronjob
+#ENTRYPOINT ["./feed_parse.sh" ]
 
-# RUN chmod 0644 /etc/cron.d/cronjob
-# RUN crontab /etc/cron.d/cronjob
+
+
+
 
 
 # CMD ["cron", "-f"]
