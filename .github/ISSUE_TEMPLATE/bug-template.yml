@@ -21,10 +21,10 @@ body:
         1. 로그인 화면 접속
         2. 아이디/비밀번호 찾기 클릭
         - 화면이 넘어가지 않음
-    validation: 
+    validations: 
       required: true
   - type: markdown
-    value: "### 버그 발생시 이미지"
+      value: "### 버그 발생시 이미지"
   - type: textarea
     id: logs
     attributes:
