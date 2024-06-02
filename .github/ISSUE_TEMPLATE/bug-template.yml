@@ -30,9 +30,10 @@ body:
       placeholder: ex) 모바일-안드로이드 , 윈도우 등
     validations: 
       required: true
-  - type: markdown
+  - type: textarea
     attributes:
-      value: "### 버그 발생시 이미지 <br><br>"
+      label: 버그 발생시 이미지(권장)
+      description: 버그가 발생했을때 화면 스크린샷
   - type: textarea
     id: logs
     attributes:
