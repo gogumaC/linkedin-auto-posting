@@ -1,0 +1,38 @@
+name: Bug Report
+description: 버그 수정관련🐞.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: bug-desc
+    attributes:
+      label: 버그 설명
+      description: 발생한 버그에 대한 설명
+      placeholder: ex) 비밀번호 찾기 버튼이 동작하지 않음.
+    validations:
+      required: true
+  - type: textarea
+    id: bug-flow
+    attributes:
+      label: 버그 발생 경로
+      description: 버그가 발생한 경로에 대한 설명
+      placeholder: |
+        ex) 1. 로그인 화면
+        2. 아이디/비밀번호 찾기 클릭
+        - 화면이 넘어가지 않음
+    validation: 
+      required: true
+  - type: markdown
+    id: bug-image
+    value: '### 버그 발생시 이미지'
+  - type: textarea
+    id: logs
+    attributes:
+      label: 오류 로그
+      description: 관련 오류 로그 첨부. 해당 로그는 자동으로 코드로 들어가므로 backtick(`)을 추가하지말고 텍스트만 입력
+      render: shell
+  - type: textarea
+    id: bug-etc
+    attributes:
+      label: 기타 사항
+      description: 기타 오류 관련 정보
