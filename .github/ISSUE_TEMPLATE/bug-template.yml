@@ -28,6 +28,8 @@ body:
       label: 실행 환경
       description: 해당 소프트웨어를 실행시킨 운영체제, 하드웨어 플랫폼 등 실행 환경 정보
       placeholder: ex) 모바일-안드로이드 , 윈도우 등
+    validation: 
+      required: true
   - type: markdown
     attributes:
       value: "### 버그 발생시 이미지 <br><br>"
