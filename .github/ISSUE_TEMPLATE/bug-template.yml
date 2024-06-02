@@ -24,6 +24,7 @@ body:
     validations: 
       required: true
   - type: markdown
+    attributes:
       value: "### 버그 발생시 이미지"
   - type: textarea
     id: logs
