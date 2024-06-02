@@ -17,13 +17,14 @@ body:
       label: 버그 발생 경로
       description: 버그가 발생한 경로에 대한 설명
       placeholder: |
-        "ex) 1. 로그인 화면
+        ex) 
+        1. 로그인 화면 접속
         2. 아이디/비밀번호 찾기 클릭
-        - 화면이 넘어가지 않음"
+        - 화면이 넘어가지 않음
     validation: 
       required: true
   - type: markdown
-    value: '### 버그 발생시 이미지'
+    value: "### 버그 발생시 이미지"
   - type: textarea
     id: logs
     attributes:
