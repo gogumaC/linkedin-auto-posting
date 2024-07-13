@@ -7,6 +7,14 @@ import posting as posting
 from config import config
 
 
+def test():
+    test_p=Posting(
+        url="https://gogumac.github.io/tools/git_github/github-template-with-yml/",
+        title="TEST",
+        content="This is test posting!"
+    )
+    posting.post_to_linkedin(test_p)
+
 def find_new_posting(feed_url):
 
     print(f"-------------------------\n Linked Auto Posting Started! start time : {datetime.now()}")
@@ -56,7 +64,9 @@ if __name__=="__main__":
         content = content + f"\n[{title}] \npublished : {published_time}"
         update_posting=Posting(url=link,title=title,content=content)
         posting.post_to_linkedin(update_posting)
-    posting.post_to_linkedin(update_posting)
     
-        
+    #TEST
+    test()
+    
+    
     

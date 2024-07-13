@@ -28,7 +28,7 @@ def send_auth_email(auth_url):
         smtp.sendmail(account,email,msg.as_string())
 
         smtp.quit()
-        print(f"email sended!\n\n")
+        print(f"email sended! [{email}]\n\n")
     else :
         print("email format not valid")
 

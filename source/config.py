@@ -11,6 +11,10 @@ class Config:
             cls._instance=super(Config,cls).__new__(cls)
             dir_name=os.path.dirname(os.path.abspath(__file__))
             cls.dotenv_path=os.path.join(dir_name,".env")
+            if not os.path.exists(cls.dotenv_path):
+                dir_name=os.path.dirname(dir_name)
+                cls.dotenv_path=os.path.join(dir_name,".env")
+            print(f"env path : {cls.dotenv_path}\n")
             load_dotenv(cls.dotenv_path)
         return cls._instance
     
