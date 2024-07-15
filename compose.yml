@@ -1,12 +1,16 @@
 
 services:
  main:
-  build: ./source
+  build:
+   context: .
+   dockerfile: main.Dockerfile
   secrets:
     - source: env
       target: .env
  server:
-  build: ./server
+  build:
+   context: .
+   dockerfile: server.Dockerfile
   secrets:
     - source: env
       target: .env
