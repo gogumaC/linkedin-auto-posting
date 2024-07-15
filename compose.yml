@@ -1,0 +1,15 @@
+
+services:
+ main:
+  build: ./source
+  secrets:
+    - source: env
+      target: .env
+ server:
+  build: ./server
+  secrets:
+    - source: env
+      target: .env
+secrets:
+ env:
+  file: ./.env
