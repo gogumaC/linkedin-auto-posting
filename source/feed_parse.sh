@@ -1,7 +1,3 @@
 #!/bin/bash
 
-# source /home/yubin/linkedin-auto-posting/.venv/bin/activate
-#python3 /home/yubin/linkedin-auto-posting/main.py#
-
-python /app/main.py 
-#python3 server.py 
+/usr/local/bin/python3 /app/main.py 
