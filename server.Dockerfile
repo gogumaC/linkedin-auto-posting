@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./server .
 
-RUN python server.py
+ENTRYPOINT python server.py

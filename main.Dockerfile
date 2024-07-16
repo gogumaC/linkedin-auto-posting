@@ -1,12 +1,11 @@
 # Start your image with a node base image
 FROM python:3.10-slim-buster
-EXPOSE 8000
 
 # The /app directory should act as the main application directory
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y cron && apt-get install -y vim nano && apt-get install -y screen
-
+RUN apt-get update && apt-get install -y cron && apt-get install -y vim nano
+# && apt-get install -y screen
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
