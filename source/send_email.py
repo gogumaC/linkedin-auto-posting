@@ -7,6 +7,7 @@ from config import config
 account=config.get('account')
 pw=config.get('password')
 email=config.get('client_email')
+ 
 
 smtp=smtplib.SMTP_SSL('smtp.gmail.com',465)
 smtp.login(account,pw)

@@ -65,8 +65,8 @@ if __name__=="__main__":
         update_posting=Posting(url=link,title=title,content=content)
         posting.post_to_linkedin(update_posting)
     
-    #TEST
-    test()
+    # #TEST
+    # test()
     
     
     

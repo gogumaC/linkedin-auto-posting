@@ -2,11 +2,9 @@ import requests
 from requests.auth import HTTPBasicAuth
 import send_email as send_email
 import os
-import dotenv
 import json
 from config import config
 
-dotenv.load_dotenv()
 CLIENT_ID=config.get('client_id')
 CLIENT_SECRETE=config.get('client_secrete')
 REDIRECT_URL=config.get('redirect_url')

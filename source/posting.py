@@ -8,6 +8,7 @@ from classes import Posting
 from config import config
 
 access_token=config.get('access_token')
+default_og_image=config.get("default_og_iamge")
 
 def get_user_urn():
   url='https://api.linkedin.com/v2/userinfo'
@@ -27,7 +28,7 @@ def get_og_image(url):
   html=response.text
 
   soup=BeautifulSoup(html,'html.parser')
-
+ 
   og_image=soup.find('meta',property='og:image')
     
   if og_image and og_image.get('content'):
@@ -48,6 +49,8 @@ def post_to_linkedin(posting:Posting):
   print(f"posting {posting.title}...")
   CLIENT_URN=get_user_urn()
   og_image=get_og_image(posting.url)
+  if not og_image:
+    og_image=default_og_image
   url ="https://api.linkedin.com/v2/ugcPosts"
 
   headers = {
