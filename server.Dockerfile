@@ -13,4 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./server .
 
+ENV TZ=Asia/Seoul
+
 ENTRYPOINT python server.py
