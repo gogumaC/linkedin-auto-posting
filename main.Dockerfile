@@ -1,6 +1,8 @@
 # Start your image with a node base image
 FROM python:3.10-slim-buster
 
+ENV TZ=Asia/Seoul
+
 # The /app directory should act as the main application directory
 WORKDIR /app
 
@@ -15,9 +17,6 @@ COPY cronjob /etc/cron.d/cronjob
 
 RUN chmod 0644 /etc/cron.d/cronjob
 RUN crontab /etc/cron.d/cronjob
-
-ENV TZ=Asia/Seoul
-
 
 CMD ["cron","-f"]
 

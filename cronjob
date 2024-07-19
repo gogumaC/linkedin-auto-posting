@@ -1,1 +1,2 @@
+TZ=Asia/Seoul
 0 * * * * /app/feed_parse.sh >> /proc/1/fd/1 2>&1
