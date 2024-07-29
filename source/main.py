@@ -61,7 +61,7 @@ if __name__=="__main__":
         title = post['title']
         link = post['link']
         published_time = post['published_time']
-        content = content + f"\n[{title}] \npublished : {published_time}"
+        content = content + f"\n\n⚡️ {title}\n"
         update_posting=Posting(url=link,title=title,content=content)
         posting.post_to_linkedin(update_posting)
     
